@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name:  nextcloud
+    component: app
+  name: nextcloudx
+spec:
+  selector:
+    matchLabels:
+      component: app
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        component: app
+    spec:
+      containers:
+        - image: public.ecr.aws/docker/library/nextcloud:stable-apache
+          imagePullPolicy: Always
+          name: app
+          ports:
+            - containerPort: 80
+      restartPolicy: Always
