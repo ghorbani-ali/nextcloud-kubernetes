@@ -19,8 +19,14 @@ spec:
     spec:
       containers:
         - image: public.ecr.aws/docker/library/nextcloud:stable-apache
-          imagePullPolicy: Always
           name: app
           ports:
             - containerPort: 80
+          volumeMounts:
+          - name: nc-volume
+            mountPath: "/var/www/html"
       restartPolicy: Always
+      volumes:
+      - name: nc-volume
+        persistentVolumeClaim:
+          claimName: nc-nfs-pvc
